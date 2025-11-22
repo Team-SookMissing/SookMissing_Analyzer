@@ -1,0 +1,6 @@
+fastapi
+uvicorn
+tldextract
+python-dotenv
+requests
+google-generativeai
