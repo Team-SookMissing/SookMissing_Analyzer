@@ -71,30 +71,4 @@ def analyze_url_pattern(url:str) -> dict:
         }
     except Exception as e:
         return {"url": url, "score": 0, "reasons": [f"URL 분석 오류: {str(e)}"]}
-    
-
-'''if __name__ == "__main__":
-        test_text = """
-        여기에 여러 URL을 섞어봅시다:
-        http://example.com
-        https://bit.ly/abc123
-        https://goodsite.org
-        http://123.45.67.89/malicious
-        https://suspicious.xyz/path
-        """
-
-        # 1. 텍스트에서 URL 추출
-        urls = extract_urls(test_text)
-        print("추출된 URL:")
-        for u in urls:
-            print("-", u)
-
-        print("\nURL 분석 결과:")
-        # 2. 각 URL 분석
-        for url in urls:
-            result = analyze_url_pattern(url)
-            print(f"\nURL: {result['url']}")
-            print(f"Score: {result['score']}")
-            print("Reasons:", ", ".join(result['reasons']) if result['reasons'] else "None")
-            '''
 
