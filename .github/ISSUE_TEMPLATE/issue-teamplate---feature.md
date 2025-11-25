@@ -1,6 +1,15 @@
 ---
 name: Issue Teamplate - feature
 about: 기능 구현을 위한 issue template입니다.
+title: ''
+labels: ''
+assignees: ''
+
+---
+
+---
+name: Issue Teamplate - feature
+about: 기능 구현을 위한 issue template입니다.
 title: "[Feature]"
 labels: ''
 assignees: ''
