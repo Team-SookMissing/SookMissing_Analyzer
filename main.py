@@ -12,7 +12,9 @@ app = FastAPI(title="Sookkmishing Analyzer")
 async def analyze_smishing(request: schemas.AnalyzeRequest):
 
     urls = utils.extract_urls(request.text)
-    url_score = 0
+
+
+    url_result = {"url":None, "score": 0, "reasons":[]}
 
     if urls:
         url_result = utils.analyze_url_pattern(urls[0])
