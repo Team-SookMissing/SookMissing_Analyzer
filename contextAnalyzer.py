@@ -30,7 +30,7 @@ if GOOGLE_API_KEY:
         당신은 사이버 보안 전문가이자 스미싱 탐지 AI입니다. 항상 JSON 형식으로만 응답합니다.
     """)
 
-def analyze_context(text: str) -> dict:
+def analyze_context(text: str, sender_number = None) -> dict:
     if not GOOGLE_API_KEY or model is None:
         return{
             "risk_score" : 0,
@@ -40,16 +40,38 @@ def analyze_context(text: str) -> dict:
         }
     
     types_str = ", ".join(SMISHING_TYPES)
+
+
+    if sender_number:
+        sender_info_str = sender_number
+        analysis_guide = """
+        1. [관계 분석 필수] [발신 번호]'와 [사용자 메시지] 내용 의 논리적 관계를 검토하세요.
+            - 금융/공공기관/기업 사칭의 경우 '010'으로 시작하는 번호나 '006'과 같이 국제 발신번호로 오면 비정상으로 탐지합니다.
+            - 단, 택배 기사, 중고 거래, 지인 등의 경우 '010' 번호로 오더라도 정상으로 간주합니다.
+
+        2. 다음 [사용자 메시지]를 분석하여 아래의 JSON 스키마에 맞춰 결과를 반환하세요.
+        """
+    else:
+        sender_info_str = "정보 없음"
+        analysis_guide = """
+        1. [발신 번호] 정보가 없으므로, 오직 [사용자 메시지] 만으로 판단하세요.
+
+        2.다음 [사용자 메시지]를 분석하여 아래의 JSON 스키마에 맞춰 결과를 반환하세요.
+        """
     
     prompt = f"""
-        다음 [사용자 메시지]를 분석하여 아래의 JSON 스키마에 맞춰 결과를 반환하세요.
+        
+        [분석 가이드]
+        {analysis_guide}
         
         [JSON 스키마]
         {{
             "risk_score": int, // 문맥적 위험도를 0~70점 사이의 범주로 평가하세요. 0은 정상 70점은 스미싱 위험도가 매우 높음을 의미
             "smishing_type": str, // 아래 [분류 기준] 중 하나를 정확히 선택
-            "reason": str, // 판단 근거를 3문장 이내로 요약하세요.
+            "reason": str, // 발신 번호가 있다면 발신 번호 검증 결과를 포함한 판단 근거를 3문장 이내로 요약하세요.
             "official_url": str | null // 사칭된 기관/서비스의 공식 URL (없거나 식별 불가 시 JSON null값을 반환하세요.)
+
+            "sender_status": str // "정상", "의심", "Unknown" 중 하나를 선택하세요.
         }}
 
         [분류 기준 (smishing_type)]
@@ -57,6 +79,9 @@ def analyze_context(text: str) -> dict:
 
         [사용자 메시지]
         {text}
+
+        [발신 번호]
+        {sender_info_str}
         """
     
     try:
@@ -74,7 +99,8 @@ def analyze_context(text: str) -> dict:
                     "risk_score": 50,
                     "smishing_type": "Parse Error",
                     "reason": "AI 응답 형식이 올바르지 않아 분석에 실패했습니다.",
-                    "official_url": None
+                    "official_url": None,
+                    "sender_status" : None
                 }
     
     except Exception as e:
@@ -83,5 +109,6 @@ def analyze_context(text: str) -> dict:
             "risk_score" : 0,
             "smishing_type" : "API Error",
             "reason" : "AI 서버 통신 중 오류 발생",
-            "official_url" : None
+            "official_url" : None,
+            "sender_status" : None
         }
