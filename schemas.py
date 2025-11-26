@@ -3,6 +3,7 @@ from typing import Optional
 
 class AnalyzeRequest(BaseModel):
     text: str
+    sender_number: Optional[str] = None
     
 class AnalyzeResponse(BaseModel):
     total_score: int = Field(..., description="최종 위험도 (0~100)")
@@ -16,3 +17,4 @@ class AnalyzeResponse(BaseModel):
     smishing_type: str
     reason: str = Field(..., description="최종 판단 근거")
     official_url: Optional[str] = None
+    sender_status: Optional[str] = None
