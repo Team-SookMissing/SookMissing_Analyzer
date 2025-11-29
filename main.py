@@ -1,5 +1,6 @@
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 import contextAnalyzer as llm
 import urlAnalyzer as utils
@@ -7,6 +8,20 @@ import schemas
 
 
 app = FastAPI(title="Sookkmishing Analyzer")
+
+origins = [
+    "http://localhost:3000",
+    "http://localshost:9000"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins = origins,
+    allow_credentials = True,
+    allow_methods = ["*"],
+    allow_headers=["*"],
+)
+
 
 @app.post("/analyze", response_model=schemas.AnalyzeResponse)
 async def analyze_smishing(request: schemas.AnalyzeRequest):
