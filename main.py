@@ -11,7 +11,8 @@ app = FastAPI(title="Sookkmishing Analyzer")
 
 origins = [
     "http://localhost:3000",
-    "http://localshost:9000"
+    "http://127.0.0.1:3000",
+    "http://localhost:9000"
 ]
 
 app.add_middleware(
