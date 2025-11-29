@@ -3,7 +3,7 @@
 ### 🔮 Analyzer 실행시키기
 #### 1) 최신 버전 실행
 ```bash
-docker run -d -p 8000:8000 --name smishing_app -e API_KEY={API_KEY} hongdabagi/smishing-analyzer:v4 
+docker run -d -p 8000:8000 --name smishing_app -e API_KEY={API_KEY} hongdabagi/smishing-analyzer
 ```
 
 #### 2) API
