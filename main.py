@@ -63,6 +63,7 @@ async def analyze_smishing(request: schemas.AnalyzeRequest):
         smishing_type=ai_result.get("smishing_type", "알 수 없음"),
         reason=final_reason,
         official_url=ai_result.get("official_url"),
-        sender_status = ai_result.get("sender_status")
+        sender_status = ai_result.get("sender_status"),
+        solution=ai_result.get("solution")
 
     )

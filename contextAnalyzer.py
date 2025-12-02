@@ -75,6 +75,7 @@ def analyze_context(text: str, sender_number = None) -> dict:
             "official_url": str | null // 사칭된 기관/서비스의 공식 URL (없거나 식별 불가 시 JSON null값을 반환하세요.)
 
             "sender_status": str // "정상", "의심", "Unknown" 중 하나를 선택하세요.
+            "solution": str // 해당되는 smishing_type에 맞는 대응방안을 2문장 이내로 제시하세요.
         }}
 
         [분류 기준 (smishing_type)]
@@ -103,7 +104,8 @@ def analyze_context(text: str, sender_number = None) -> dict:
                     "smishing_type": "Parse Error",
                     "reason": "AI 응답 형식이 올바르지 않아 분석에 실패했습니다.",
                     "official_url": None,
-                    "sender_status" : None
+                    "sender_status" : None,
+                    "solution": "AI 응답 형식이 올바르지 않아 분석에 실패했습니다."
                 }
     
     except Exception as e:
