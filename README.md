@@ -48,6 +48,7 @@ docker run -d -p 8000:8000 --name smishing_app -e API_KEY={API_KEY} hongdabagi/s
   "smishing_type": "대출 권유 및 투자 유도",
   "reason": "KB국민은행과 같은 금융기관은 대출 상담을 위해 개인 휴대폰 번호(010)를 사용하지 않습니다. 정부지원 서민대출을 명목으로 비대면 신청 및 상담을 유도하는 것은 전형적인 대출 사기 수법입니다. 발신 번호와 메시지 내용 모두 사칭이 명확하게 의심됩니다.",
   "official_url": null,
-  "sender_status": "의심"
+  "sender_status": "의심",
+  "solution": "..."
 }
 ```
